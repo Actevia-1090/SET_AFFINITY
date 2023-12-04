@@ -1,4 +1,6 @@
-#Multi-Process and Multi-Thread CPU Affinity Demo
+Multi-Process and Multi-Thread CPU Affinity Demo
+
+
 This repository contains two C programs that demonstrate the use of multi-processes and multi-threads in conjunction with CPU affinity settings.
 
 1. Multi-Process Affinity Demo
