@@ -9,6 +9,7 @@ The multi_process_affinity.c program showcases the creation of multiple child pr
 
 Instructions
 Compile the program: gcc multi_process_affinity.c -o multi_process_affinity -lpthread
+
 Run the executable: ./multi_process_affinity
 
 2. CPU Affinity Setter with PID
@@ -17,6 +18,7 @@ The cpu_affinity_setter.c program allows you to set the CPU affinity of a specif
 
 Instructions
 Compile the program: gcc cpu_affinity_setter.c -o cpu_affinity_setter -lpthread
+
 Run the executable: ./cpu_affinity_setter
-Usage Notes
+
 
