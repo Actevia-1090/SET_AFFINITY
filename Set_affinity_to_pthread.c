@@ -6,6 +6,7 @@
 #include<pthread.h>
 #include<sys/wait.h>
 #include<sys/prctl.h>
+enum Status {     STATUS_SUCCESS = 0,     STATUS_FAILURE = -1, };
 int Thread_number = 0, core_id = 0;
 void *run_in_loop(void *args) {
     int thread_number = ((int *)args)[0];
@@ -23,7 +24,7 @@ void run_on_specific_core(int core_id) {
    CPU_ZERO(&mask);
    CPU_SET(core_id, &mask);
    pthread_t current_thread = pthread_self();
-    if (pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &mask) != 0) {
+    if (pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &mask) != STATUS_SUCCESS) {
         perror("pthread_setaffinity_np");
         exit(EXIT_FAILURE);
     }
@@ -34,7 +35,7 @@ int main() {
     pid_t pid1, pid2,pid3,pid4;
 	//nice(10);
     // Create the first child process
-    if ( (pid1 = fork())==0 ) {
+    if ( (pid1 = fork())==STATUS_SUCCESS ) {
         // First child process logic
         //nice(1);
         char* child = "Child1";
@@ -44,17 +45,17 @@ int main() {
         run_on_specific_core(core_id);
         int args[] = {Thread_number, core_id};
         pthread_t tid;
-        if (pthread_create(&tid, NULL, run_in_loop, (void *)args)!= 0) {
+        if (pthread_create(&tid, NULL, run_in_loop, (void *)args)!= STATUS_SUCCESS) {
         perror("pthread_create");
         exit(EXIT_FAILURE);
     	}
-    	if (pthread_join(tid, NULL)!= 0) {
+    	if (pthread_join(tid, NULL)!= STATUS_SUCCESS) {
         perror("pthread_create");
         exit(EXIT_FAILURE);
     	}
     }
     // Create the second child process
-    if ((pid2 = fork())==0 ) {
+    if ((pid2 = fork())==STATUS_SUCCESS ) {
          //Setting name for the processes
          //nice(10);
 	char* child1 = "Child2";
@@ -64,16 +65,16 @@ int main() {
         run_on_specific_core(core_id);
         int args[] = {Thread_number, core_id};
         pthread_t tid1;
-        if (pthread_create(&tid1, NULL, run_in_loop, (void *)args)!= 0) {
+        if (pthread_create(&tid1, NULL, run_in_loop, (void *)args)!= STATUS_SUCCESS) {
         perror("pthread_create");
         exit(EXIT_FAILURE);
 	}
-    	if (pthread_join(tid1, NULL)!= 0) {
+    	if (pthread_join(tid1, NULL)!= STATUS_SUCCESS) {
         perror("pthread_create");
         exit(EXIT_FAILURE);
     	}
     }
-    if ((pid3 = fork())==0 ) {
+    if ((pid3 = fork())== STATUS_SUCCESS ) {
          //Setting name for the processes
          //nice(10);
 	char* child2 = "Child3";
@@ -83,16 +84,16 @@ int main() {
         run_on_specific_core(core_id);
         int args[] = {Thread_number, core_id};
         pthread_t tid2;
-        if (pthread_create(&tid2, NULL, run_in_loop, (void *)args)!= 0) {
+        if (pthread_create(&tid2, NULL, run_in_loop, (void *)args)!= STATUS_SUCCESS) {
         perror("pthread_create");
         exit(EXIT_FAILURE);
     	}
-    	if (pthread_join(tid2, NULL)!= 0) {
+    	if (pthread_join(tid2, NULL)!= STATUS_SUCCESS) {
         perror("pthread_create");
         exit(EXIT_FAILURE);
     	}
     }
-    if ((pid4 = fork())==0 ) {
+    if ((pid4 = fork())== STATUS_SUCCESS ) {
          //Setting name for the processes
          //nice(10);
 	char* child3 = "Child4";
@@ -102,11 +103,11 @@ int main() {
         run_on_specific_core(core_id);
         int args[] = {Thread_number, core_id};
         pthread_t tid3;
-        if (pthread_create(&tid3, NULL, run_in_loop, (void *)args)!= 0) {
+        if (pthread_create(&tid3, NULL, run_in_loop, (void *)args)!= STATUS_SUCCESS) {
         perror("pthread_create");
         exit(EXIT_FAILURE);
     	}
-    	if (pthread_join(tid3, NULL)!= 0) {
+    	if (pthread_join(tid3, NULL)!= STATUS_SUCCESS) {
         perror("pthread_create");
         exit(EXIT_FAILURE);
     	}
