@@ -6,7 +6,7 @@
 #include<pthread.h>
 #include<sys/wait.h>
 #include<sys/prctl.h>
-enum Status {     STATUS_SUCCESS = 0,     STATUS_FAILURE = -1, };
+enum Status {     STATUS_SUCCESS = 0,     STATUS_FAILURE = -1 };
 int Thread_number = 0, core_id = 0;
 void *run_in_loop(void *args) {
     int thread_number = ((int *)args)[0];
