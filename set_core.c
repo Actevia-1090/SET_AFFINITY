@@ -8,7 +8,7 @@
 #include <sys/wait.h>
 #include <sys/prctl.h>
 
-enum Status {     STATUS_SUCCESS = 0,     STATUS_FAILURE = -1, };
+enum Status {     STATUS_SUCCESS = 0,     STATUS_FAILURE = -1 };
 void set_core_withPID(pid_t pid, int core_id) 
 {
 
