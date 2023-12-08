@@ -8,7 +8,7 @@
 #include <sys/wait.h>
 #include <sys/prctl.h>
 
-
+enum Status {     STATUS_SUCCESS = 0,     STATUS_FAILURE = -1, };
 void set_core_withPID(pid_t pid, int core_id) 
 {
 
@@ -18,7 +18,7 @@ void set_core_withPID(pid_t pid, int core_id)
 
     pthread_t current_thread = pthread_self();
 
-    if (sched_setaffinity(pid, sizeof(cpu_set_t), &mask) != 0) {
+    if (sched_setaffinity(pid, sizeof(cpu_set_t), &mask) != STATUS_SUCCESS) {
         perror("pthread_setaffinity_np");
         exit(EXIT_FAILURE);
     }
